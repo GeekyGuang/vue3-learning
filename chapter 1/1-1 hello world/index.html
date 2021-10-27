@@ -16,17 +16,17 @@
     Vue.createApp({
       data() {
         return {
-          content: 'hello world'
+          show: true
         }
       },
       methods: {
         handleBtnClick() {
-          this.content = this.content.split('').reverse().join('')
+          this.show = !this.show
         }
       },
       template: `
-          <div>{{content}}</div>
-          <button v-on:click="handleBtnClick">反转</button>
+          <div v-if="show">hello</div>
+          <button v-on:click="handleBtnClick">显示/隐藏</button>
           `
     }).mount('#root')
   </script>
