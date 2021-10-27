@@ -13,7 +13,7 @@
   <div id="root"></div>
 
   <script>
-    Vue.createApp({
+    const app = Vue.createApp({
       data() {
         return {
           list: [],
@@ -30,10 +30,19 @@
           <input v-model="inputValue">
           <button v-on:click="handleBtnClick">新增</button>
           <ul>
-            <li v-for="(item, index) of list">{{item}} {{index}}</li>
+            <todo-list v-for="(item, index) of list" 
+                       v-bind:index="index" 
+                       v-bind:content="item"/>
           </ul>
           `
-    }).mount('#root')
+    })
+
+    app.component('todo-list', {
+      props: ['index', 'content'],
+      template: `<li>{{index}}--{{content}}</li>`
+    })
+
+    app.mount('#root')
   </script>
 </body>
 
