@@ -16,17 +16,22 @@
     Vue.createApp({
       data() {
         return {
-          show: true
+          list: [],
+          inputValue: ''
         }
       },
       methods: {
         handleBtnClick() {
-          this.show = !this.show
+          this.list.push(this.inputValue)
+          this.inputValue = ''
         }
       },
       template: `
-          <div v-if="show">hello</div>
-          <button v-on:click="handleBtnClick">显示/隐藏</button>
+          <input v-model="inputValue">
+          <button v-on:click="handleBtnClick">新增</button>
+          <ul>
+            <li v-for="(item, index) of list">{{item}} {{index}}</li>
+          </ul>
           `
     }).mount('#root')
   </script>
