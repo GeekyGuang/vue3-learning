@@ -14,20 +14,26 @@
 
   <script>
     const app = Vue.createApp({
+      data(){
+        return {
+          count: 1
+        }
+      },
       template: `
-           <my-component class="hello" style="color:red;"/>
+           <my-component v-model="count"/>
           `
     })
 
     app.component('my-component',{
-      inheritAttrs: false,
-      created(){
-        console.log(this.$attrs)
+      props:['modelValue'],
+      methods:{
+        handleBtnClick(){
+          this.$emit('update:modelValue', this.modelValue + 1)
+        }
       },
       template: `<div>
-         <p>hello world!</p>
-         <input type="text" v-bind="$attrs">
-         <button>点我</button>
+         {{modelValue}}
+         <button @click="handleBtnClick">+1</button>
      </div>`
     })
 
