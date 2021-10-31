@@ -14,35 +14,24 @@
 
   <script>
     const app = Vue.createApp({
-      data() {
-        return {
-          list: [],
-          inputValue: ''
-        }
-      },
-      methods: {
-        handleBtnClick() {
-          this.list.push(this.inputValue)
-          this.inputValue = ''
-        }
-      },
       template: `
-          <input v-model="inputValue">
-          <button v-on:click="handleBtnClick">新增</button>
-          <ul>
-            <todo-list v-for="(item, index) of list" 
-                       v-bind:index="index" 
-                       v-bind:content="item"/>
-          </ul>
+           <my-component class="hello" style="color:red;"/>
           `
     })
 
-    app.component('todo-list', {
-      props: ['index', 'content'],
-      template: `<li>{{index}}--{{content}}</li>`
+    app.component('my-component',{
+      inheritAttrs: false,
+      created(){
+        console.log(this.$attrs)
+      },
+      template: `<div>
+         <p>hello world!</p>
+         <input type="text" v-bind="$attrs">
+         <button>点我</button>
+     </div>`
     })
 
-    app.mount('#root')
+      app.mount("#root")
   </script>
 </body>
 
