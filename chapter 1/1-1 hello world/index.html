@@ -16,34 +16,27 @@
     const app = Vue.createApp({
       data(){
         return {
-          count: 'a'
+          name: 'jack'
         }
       },
+      provide(){
+        return {
+          username: this.name
+        }
+
+      },
       template: `
-           <my-component v-model.capitalize="count"/>
+           <son></son>
           `
     })
 
-    app.component('my-component',{
-      props:{
-        modelValue: String,
-        modelModifiers: {
-          default: ()=>({})
-        }
-      },
-      methods:{
-        handleBtnClick(){
-          let value = this.modelValue + 'b'
-          if(this.modelModifiers.capitalize){
-            value = value.charAt(0).toUpperCase() + value.slice(1)
-          }
-          this.$emit('update:modelValue', value)
-        }
-      },
-      template: `<div>
-         {{modelValue}}
-         <button @click="handleBtnClick">+b</button>
-     </div>`
+    app.component('son',{
+      template: `<grandson></grandson>`
+    })
+
+    app.component('grandson',{
+      inject:['username'],
+      template: `<div>{{this.username}}</div>`
     })
 
       app.mount("#root")
