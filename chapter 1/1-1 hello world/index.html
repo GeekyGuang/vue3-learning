@@ -16,24 +16,33 @@
     const app = Vue.createApp({
       data(){
         return {
-          count: 1
+          count: 'a'
         }
       },
       template: `
-           <my-component v-model="count"/>
+           <my-component v-model.capitalize="count"/>
           `
     })
 
     app.component('my-component',{
-      props:['modelValue'],
+      props:{
+        modelValue: String,
+        modelModifiers: {
+          default: ()=>({})
+        }
+      },
       methods:{
         handleBtnClick(){
-          this.$emit('update:modelValue', this.modelValue + 1)
+          let value = this.modelValue + 'b'
+          if(this.modelModifiers.capitalize){
+            value = value.charAt(0).toUpperCase() + value.slice(1)
+          }
+          this.$emit('update:modelValue', value)
         }
       },
       template: `<div>
          {{modelValue}}
-         <button @click="handleBtnClick">+1</button>
+         <button @click="handleBtnClick">+b</button>
      </div>`
     })
 
