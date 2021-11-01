@@ -11,33 +11,35 @@
 
 <body>
   <div id="root"></div>
+  <style>
+    .color-transition {
+      transition: background-color 1s ease;
+    }
+  </style>
 
   <script>
     const app = Vue.createApp({
       data(){
         return {
-          name: 'jack'
+          styleObj: {
+            background: 'green'
+          }
         }
       },
-      provide(){
-        return {
-          username: this.name
+      methods:{
+        handleClick(){
+          if(this.styleObj.background === 'green'){
+            this.styleObj.background = 'blue'
+          }else{
+            this.styleObj.background = 'green'
+          }
         }
-
       },
       template: `
-           <son></son>
+           <div class="color-transition" :style="styleObj" @click="handleClick">hello world</div>
           `
     })
 
-    app.component('son',{
-      template: `<grandson></grandson>`
-    })
-
-    app.component('grandson',{
-      inject:['username'],
-      template: `<div>{{this.username}}</div>`
-    })
 
       app.mount("#root")
   </script>
