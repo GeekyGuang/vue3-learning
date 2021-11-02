@@ -36,18 +36,25 @@
     const app = Vue.createApp({
       data(){
         return {
-          list: [1,2,3]
+          number: 1,
+          animateNumber: 1
         }
       },
       methods:{
         handleClick(){
-          this.list.unshift(this.list.length + 1)
+          this.number = 10
+          if (this.animateNumber < this.number) {
+            const animation = setInterval(()=>{
+              this.animateNumber += 1;
+              if (this.animateNumber === 10){
+                clearInterval(animation)
+              }
+            },100)
+          }
         }
       },
       template: `
-           <transition-group>
-              <span v-for="item in list" :key="item"> {{item}} </span>
-           </transition-group>
+           <div>{{animateNumber}}</div>
            <button @click="handleClick">增加</button>
           `
     })
