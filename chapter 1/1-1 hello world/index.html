@@ -12,31 +12,36 @@
 <body>
   <div id="root"></div>
   <style>
-    .color-transition {
-      transition: background-color 1s ease;
+    .v-enter-from,.v-leave-to {
+      opacity: 0;
     }
+    .v-enter-to,.v-leave-from {
+      opacity: 1;
+    }
+    .v-enter-active,.v-leave-active {
+      transition: all 1s ease-in;
+    }
+
   </style>
 
   <script>
     const app = Vue.createApp({
       data(){
         return {
-          styleObj: {
-            background: 'green'
-          }
+          show: true
         }
       },
       methods:{
         handleClick(){
-          if(this.styleObj.background === 'green'){
-            this.styleObj.background = 'blue'
-          }else{
-            this.styleObj.background = 'green'
-          }
+          this.show = !this.show
         }
       },
       template: `
-           <div class="color-transition" :style="styleObj" @click="handleClick">hello world</div>
+           <transition mode="out-in" appear>
+             <div v-if="show">hello</div>
+             <div v-else>world</div>
+           </transition>
+           <button @click="handleClick">切换</button>
           `
     })
 
