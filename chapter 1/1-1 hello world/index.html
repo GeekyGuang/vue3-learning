@@ -12,13 +12,21 @@
 <body>
   <div id="root"></div>
   <style>
-    .v-enter-from,.v-leave-to {
-      opacity: 0;
+    span {
+      display: inline-block;
+      padding: 0 10px;
     }
-    .v-enter-to,.v-leave-from {
+    .v-enter-from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    .v-enter-to {
       opacity: 1;
     }
-    .v-enter-active,.v-leave-active {
+    .v-enter-active {
+      transition: all 1s ease-in;
+    }
+    .v-move {
       transition: all 1s ease-in;
     }
 
@@ -28,20 +36,19 @@
     const app = Vue.createApp({
       data(){
         return {
-          show: true
+          list: [1,2,3]
         }
       },
       methods:{
         handleClick(){
-          this.show = !this.show
+          this.list.unshift(this.list.length + 1)
         }
       },
       template: `
-           <transition mode="out-in" appear>
-             <div v-if="show">hello</div>
-             <div v-else>world</div>
-           </transition>
-           <button @click="handleClick">切换</button>
+           <transition-group>
+              <span v-for="item in list" :key="item"> {{item}} </span>
+           </transition-group>
+           <button @click="handleClick">增加</button>
           `
     })
 
