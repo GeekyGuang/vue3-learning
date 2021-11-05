@@ -35,15 +35,14 @@
   <script >
     const app = Vue.createApp({
       template: `
-        <div @click="handleClick">{{name}}</div>
+        <div @click="handleClick">{{count}}</div>
       `,
-      mounted(){
-        console.log(this.$options)  // 获取当前实例的属性
-      },
       setup(){
+        const count = Vue.ref(0)
+        const handleClick = () => {count.value = count.value + 1;console.log(count.value)}
         return {
-          name: 'jack',
-          handleClick: ()=>{console.log('hello')}
+          count,
+          handleClick,
         }
       }
     })
