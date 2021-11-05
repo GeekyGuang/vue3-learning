@@ -32,31 +32,20 @@
 
   </style>
 
-  <script>
+  <script >
     const app = Vue.createApp({
-      data(){
-        return {
-          number: 1,
-          animateNumber: 1
-        }
-      },
-      methods:{
-        handleClick(){
-          this.number = 10
-          if (this.animateNumber < this.number) {
-            const animation = setInterval(()=>{
-              this.animateNumber += 1;
-              if (this.animateNumber === 10){
-                clearInterval(animation)
-              }
-            },100)
-          }
-        }
-      },
       template: `
-           <div>{{animateNumber}}</div>
-           <button @click="handleClick">增加</button>
-          `
+        <div @click="handleClick">{{name}}</div>
+      `,
+      mounted(){
+        console.log(this.$options)  // 获取当前实例的属性
+      },
+      setup(){
+        return {
+          name: 'jack',
+          handleClick: ()=>{console.log('hello')}
+        }
+      }
     })
 
 
