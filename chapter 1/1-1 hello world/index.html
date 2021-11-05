@@ -35,14 +35,14 @@
   <script >
     const app = Vue.createApp({
       template: `
-        <div @click="handleClick">{{count}}</div>
+        <div @click="handleClick">{{user.name}}</div>
       `,
       setup(){
-        const {ref} = Vue
-        const count = ref(0)
-        const handleClick = () => {count.value = count.value + 1;}
+        const {reactive} = Vue
+        const user = reactive({name: 'jack'})
+        const handleClick = () => {user.name = 'rose'}
         return {
-          count,
+          user,
           handleClick,
         }
       }
