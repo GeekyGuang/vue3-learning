@@ -38,8 +38,8 @@
         <div @click="handleClick">{{user.name}}</div>
       `,
       setup(){
-        const {reactive} = Vue
-        const user = reactive({name: 'jack'})
+        const {reactive, readonly} = Vue
+        const user = readonly({name: 'jack'})
         const handleClick = () => {user.name = 'rose'}
         return {
           user,
