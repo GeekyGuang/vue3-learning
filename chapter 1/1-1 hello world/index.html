@@ -33,18 +33,45 @@
   </style>
 
   <script >
+    const listRelativeEffect = () => {
+      const {reactive} = Vue
+      const list = reactive([])
+      const addToList = (value) => {
+        console.log(value)
+        list.push(value)
+      }
+
+      return {list, addToList}
+    }
+
+    const inputRelativeEffect = () => {
+      const {ref} = Vue
+      const inputValue = ref('')
+      const updateInputValue = (e) =>{
+        inputValue.value = e.target.value
+      }
+      return {
+        inputValue,updateInputValue
+      }
+    }
     const app = Vue.createApp({
       template: `
-        <div @click="handleClick">{{name}}</div>
+        <div>
+        <input :value="inputValue" @input="updateInputValue"/>
+        <button @click="()=>addToList(inputValue)">提交</button>
+        </div>
+        <ul>
+        <li v-for="item of list" :key="item">{{item}}</li>
+        </ul>
       `,
       setup(){
-        const {reactive, toRef} = Vue
-        const user = reactive({name: 'jack'})
-        const name = toRef(user, 'name')
-        const handleClick = () => {name.value = 'rose'}
+        const {list, addToList} = listRelativeEffect()
+        const {inputValue, updateInputValue} = inputRelativeEffect()
         return {
-          name,
-          handleClick,
+          inputValue,
+          list,
+          updateInputValue,
+          addToList
         }
       }
     })
