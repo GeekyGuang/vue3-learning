@@ -3,13 +3,16 @@
 </template>
 
 <script>
-
+import {useStore}from 'vuex'
+import {computed}from 'vue'
   export default {
-    computed: {
-      msg(){
-        return this.$store.state.msg
+    setup(){
+      const store = useStore()
+      return {
+        msg: computed(()=> store.state.msg)
       }
     }
+
   }
 </script>
 
