@@ -33,47 +33,29 @@
   </style>
 
   <script >
-    const listRelativeEffect = () => {
-      const {reactive} = Vue
-      const list = reactive([])
-      const addToList = (value) => {
-        console.log(value)
-        list.push(value)
-      }
-
-      return {list, addToList}
-    }
-
-    const inputRelativeEffect = () => {
-      const {ref} = Vue
-      const inputValue = ref('')
-      const updateInputValue = (e) =>{
-        inputValue.value = e.target.value
-      }
-      return {
-        inputValue,updateInputValue
-      }
-    }
     const app = Vue.createApp({
-      template: `
-        <div>
-        <input :value="inputValue" @input="updateInputValue"/>
-        <button @click="()=>addToList(inputValue)">提交</button>
-        </div>
-        <ul>
-        <li v-for="item of list" :key="item">{{item}}</li>
-        </ul>
-      `,
       setup(){
-        const {list, addToList} = listRelativeEffect()
-        const {inputValue, updateInputValue} = inputRelativeEffect()
-        return {
-          inputValue,
-          list,
-          updateInputValue,
-          addToList
+        const {ref, provide, readonly} = Vue
+        const count = ref(0)
+        const addCount = () => {
+          count.value += 1
         }
-      }
+        provide('count', readonly(count))
+        provide('addCount', addCount)
+      },
+      template:`<my-component />`
+    })
+
+    app.component('my-component', {
+      setup(){
+        const {inject} = Vue
+        const count = inject('count', 0)
+        const addCount = inject('addCount')
+        return {count, addCount}
+      },
+      template:`
+        <div @click="addCount">{{count}}</div>
+      `
     })
 
 
