@@ -1,26 +1,40 @@
 <template>
-  <img alt="Vue logo" src="./assets/logo.png">
-  <HelloWorld msg="Welcome to Your Vue.js App"/>
+  <div>
+    <input v-model="inputValue"/>
+    <button @click="addList">提交</button>
+  </div>
+  <ul>
+    <ListItem v-for="item of list" :key="item" :input-value="item"/>
+  </ul>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import {ref, reactive} from 'vue'
+import ListItem from '@/components/ListItem'
 
 export default {
   name: 'App',
-  components: {
-    HelloWorld
+  components:{
+    ListItem
+  },
+  setup(){
+    const inputValue = ref('')
+    const list = reactive([])
+    const addList = () => {
+      list.push(inputValue.value)
+    }
+    return {
+      inputValue,
+      list,
+      addList
+    }
   }
+
 }
 </script>
 
 <style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
+  ul {
+    list-style: none;
+  }
 </style>
