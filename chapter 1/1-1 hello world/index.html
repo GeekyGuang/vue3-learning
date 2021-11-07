@@ -35,28 +35,17 @@
   <script >
     const app = Vue.createApp({
       setup(){
-        const {ref, provide, readonly} = Vue
-        const count = ref(0)
-        const addCount = () => {
-          count.value += 1
-        }
-        provide('count', readonly(count))
-        provide('addCount', addCount)
+        const {ref, onMounted} = Vue
+        const hello = ref(null)
+        onMounted(()=>{
+          console.log(hello.value)
+        })
+
+        return {hello}
       },
-      template:`<my-component />`
+      template:`<div ref="hello">hello world</div>`
     })
 
-    app.component('my-component', {
-      setup(){
-        const {inject} = Vue
-        const count = inject('count', 0)
-        const addCount = inject('addCount')
-        return {count, addCount}
-      },
-      template:`
-        <div @click="addCount">{{count}}</div>
-      `
-    })
 
 
       app.mount("#root")
