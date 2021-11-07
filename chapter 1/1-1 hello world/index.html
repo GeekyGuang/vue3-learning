@@ -38,9 +38,9 @@
         <div @click="handleClick">{{name}}</div>
       `,
       setup(){
-        const {reactive, toRefs} = Vue
+        const {reactive, toRef} = Vue
         const user = reactive({name: 'jack'})
-        const {name} = toRefs(user)
+        const name = toRef(user, 'name')
         const handleClick = () => {name.value = 'rose'}
         return {
           name,
